@@ -28,12 +28,22 @@ case "$1" in
 			done
 		fi
 
-		echo -n > $RESOLV_CONF
+		[ -n "$dns" ] && echo -n > $RESOLV_CONF
 		[ -n "$domain" ] && echo search $domain >> $RESOLV_CONF
 		for i in $dns ; do
 			echo adding dns $i
 			echo nameserver $i >> $RESOLV_CONF
 		done
+
+		# https://udhcp.busybox.net/README.udhcpc
+		if [ -n "$ntpsrv" ]; then
+			NTP_CONF='/etc/ntp.conf'
+			echo -n > "$NTP_CONF"
+			for svr in $ntpsrv; do
+				echo "adding NTP $svr"
+				echo "server $svr" >> "$NTP_CONF"
+			done
+		fi
 		;;
 esac
 
