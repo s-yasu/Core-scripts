@@ -630,7 +630,7 @@ fi
 if [ -n "$NODHCP" ]; then
 	echo "${GREEN}Skipping DHCP broadcast/network detection as requested on boot commandline.${NORMAL}"
 else
-	[ -z "$DHCP_RAN" ] && /etc/init.d/dhcp.sh &
+	[ -z "$DHCP_RAN" ] && /etc/init.d/dhcp.sh
 	[ -z "$NORTC" ] || /etc/init.d/settime.sh &
 fi
 
